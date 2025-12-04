@@ -1,5 +1,10 @@
+'use client';
+
+import { useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
+import ProjectForm from './components/ProjectForm';
+import TechnologyInput from './components/TechnologyInput';
 
 export default function Projects() {
   // TODO: Students will implement the following:
@@ -9,8 +14,11 @@ export default function Projects() {
   // 4. Add project creation functionality using the ProjectForm component
   // 5. Handle loading and error states
 
+  const [showForm, setShowForm] = useState(false);
+
   // For now, show placeholder content
   const placeholderProjects = [];
+
 
   return (
     <div className="min-h-screen p-8">
@@ -18,10 +26,19 @@ export default function Projects() {
         {/* Header - students will add "Add New Project" button here */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <h1 className="text-5xl font-bold">My Projects</h1>
-          {/* TODO: Add "Add New Project" button that shows/hides the form */}
+          <button
+            onClick={() => setShowForm((prev) => !prev)}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+          >
+            {showForm ? 'Cancel' : 'Add New Project'}
+          </button>
         </div>
 
         {/* TODO: Add ProjectForm component here */}
+        {showForm && <ProjectForm 
+          isOpen={showForm} 
+          onCancel={() => setShowForm(false)}
+        />}
         {/* The form should be conditionally rendered based on showForm state */}
 
         {/* Projects Grid */}

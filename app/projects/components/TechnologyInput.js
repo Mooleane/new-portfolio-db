@@ -31,12 +31,161 @@
 // - Use includes() to check for duplicates
 // - Handle keyPress event for Enter key
 // - Style error states with conditional classes
+'use client'
+
+import React, { useState, useEffect } from 'react'
+
+// Quick-add list (kept outside the component to avoid recreating it each render)
+const QUICK_TECHNOLOGIES = [
+  'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'Express',
+  'HTML', 'CSS', 'Tailwind CSS', 'Bootstrap', 'Python', 'Java',
+  'PostgreSQL', 'MongoDB', 'MySQL', 'Prisma', 'GraphQL', 'REST API',
+  'Git', 'Docker', 'AWS', 'Vercel', 'Figma', 'Photoshop'
+]
 
 export default function TechnologyInput({ technologies = [], onChange, error }) {
-  // TODO: Implement this component
+  // Local state for selected technologies (array)
+  const [selectedTechs, setSelectedTechs] = useState(
+    Array.isArray(technologies) ? technologies : []
+  )
+
+  // Local state for the input field value
+  const [inputValue, setInputValue] = useState('')
+
+  // Local error message (e.g., duplicate)
+  const [localError, setLocalError] = useState('')
+
+  // Utility: trim input
+  const normalize = (s) => String(s).trim()
+
+  // Utility: check duplicate (case-insensitive)
+  const isDuplicate = (tech) => {
+    const lc = String(tech).toLowerCase()
+    return selectedTechs.some((t) => String(t).toLowerCase() === lc)
+  }
+
+  // Add a technology (from input or quick-add)
+  const addTechnology = (raw) => {
+    const tech = normalize(raw)
+    if (!tech) return
+    if (isDuplicate(tech)) {
+      setLocalError('Technology already added')
+      return
+    }
+    const next = [...selectedTechs, tech]
+    setSelectedTechs(next)
+    setInputValue('')
+    setLocalError('')
+    if (typeof onChange === 'function') onChange(next)
+  }
+
+  // Remove a technology by index
+  const removeTechnology = (index) => {
+    const next = selectedTechs.filter((_, i) => i !== index)
+    setSelectedTechs(next)
+    if (typeof onChange === 'function') onChange(next)
+  }
+
+  // Handle Enter key in input
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      addTechnology(inputValue)
+    }
+  }
+
+  // === IMPORTANT: Sync with parent prop only when different ===
+  // This prevents an infinite update loop if `technologies` prop is a new array
+  // reference every render. We compare length and each item to decide.
+  useEffect(() => {
+    if (!Array.isArray(technologies)) return
+
+    const propArr = technologies
+    const stateArr = selectedTechs
+
+    const arraysEqual =
+      propArr.length === stateArr.length &&
+      propArr.every((val, idx) => String(val) === String(stateArr[idx]))
+
+    // Only update local state if arrays are actually different
+    if (!arraysEqual) {
+      setSelectedTechs(propArr)
+    }
+    // We intentionally do NOT call onChange here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [technologies])
+
+  const showError = !!(error || localError)
+
   return (
-    <div>
-      <p>TODO: Implement TechnologyInput component</p>
+    <div className="w-full max-w-lg">
+      {/* Tags: selected technologies */}
+      <div className="flex flex-wrap gap-2 mb-2" role="list" aria-label="Selected technologies">
+        {selectedTechs.map((tech, i) => (
+          <div
+            key={String(tech) + '-' + i}
+            role="listitem"
+            className="flex items-center gap-2 px-2 py-1 rounded-full border text-sm"
+          >
+            <span>{tech}</span>
+            <button
+              type="button"
+              aria-label={`Remove ${tech}`}
+              onClick={() => removeTechnology(i)}
+              className="text-xs px-1"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Input + Add button */}
+      <div className="flex gap-2 items-start">
+        <input
+          id="tech-input"
+          aria-label="Add technology"
+          value={inputValue}
+          onChange={(e) => { setInputValue(e.target.value); setLocalError('') }}
+          onKeyDown={handleKeyDown}
+          placeholder="Type technology and press Enter or Add"
+          className={
+            'flex-1 px-3 py-2 border rounded focus:outline-none ' +
+            (showError ? 'border-red-500' : 'border-gray-300')
+          }
+        />
+        <button
+          type="button"
+          onClick={() => addTechnology(inputValue)}
+          className="px-3 py-2 rounded border"
+        >
+          Add
+        </button>
+      </div>
+
+      {/* Error display */}
+      <div className="min-h-[1.25rem] mt-1 text-sm">
+        {localError ? (
+          <div className="text-red-600" role="status">{localError}</div>
+        ) : error ? (
+          <div className="text-red-600" role="status">{String(error)}</div>
+        ) : null}
+      </div>
+
+      {/* Quick-add buttons */}
+      <div className="mt-3 flex flex-wrap gap-2">
+        {QUICK_TECHNOLOGIES.map((tech) => (
+          <button
+            key={tech}
+            type="button"
+            onClick={() => addTechnology(tech)}
+            className="text-sm px-2 py-1 rounded border"
+            aria-pressed={isDuplicate(tech)}
+          >
+            {tech}
+          </button>
+        ))}
+      </div>
     </div>
-  );
+  )
 }

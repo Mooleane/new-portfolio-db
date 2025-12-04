@@ -23,7 +23,15 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const { title, description, imageUrl, projectUrl, githubUrl, technologies } = body;
-    
+
+    // Validate required fields
+    if (!title || !description || !technologies) {
+      return NextResponse.json(
+        { error: 'Title, description, and technologies are required' },
+        { status: 400 }
+      );
+    }
+
     const project = await prisma.project.create({
       data: {
         title,
@@ -35,12 +43,11 @@ export async function POST(request) {
       }
     });
     return NextResponse.json(project, { status: 201 });
-
   } catch (error) {
     console.error('Error creating project:', error);
     return NextResponse.json(
       { error: 'Failed to create project' },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
