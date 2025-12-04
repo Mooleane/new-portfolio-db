@@ -1,27 +1,92 @@
+import ProfilePhoto from "../components/ProfilePhoto"
+
 export default function About() {
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl font-bold mb-8">About Me</h1>
         
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h2 className="text-3xl font-bold mb-4">TODO: Add Your Profile</h2>
-          <div className="space-y-4 text-gray-600">
-            <p>✏️ Add a profile photo using the next/image component</p>
-            <p>✏️ Write a paragraph about who you are</p>
-            <p>✏️ List your skills or interests</p>
-            <p>✏️ Share your goals or what you're learning</p>
-          </div>
-        </div>
+        <div className="mb-12">
+          <ProfilePhoto />
 
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
-          <h3 className="font-bold text-blue-900 mb-2">💡 Example Structure:</h3>
-          <ul className="text-blue-800 space-y-1">
-            <li>• Profile photo (circular, 300x300px)</li>
-            <li>• Bio paragraph (3-5 sentences)</li>
-            <li>• Skills section with badges</li>
-            <li>• Education or experience timeline</li>
-          </ul>
+          <p className="text-gray-700 mt-2">
+            My name is Aaron and I am an internship Associate at Launchpad Philly. <br />In my free time, I like to draw and play video games. <br />I am currently learning how to create Next.js Projects.
+          </p>
+
+          <h2 className="text-3xl font-bold mb-8 mt-12">Technical Skills</h2>
+          <div className="grid grid-cols-2 gap-6 mb-12">
+            <div>
+              <h3 className="font-bold text-gray-900 mb-2">Languages & Frameworks</h3>
+              <p className="text-gray-700">JavaScript, React, Python, Next.js, HTML, CSS</p>
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900 mb-2">Tools & Platforms</h3>
+              <p className="text-gray-700">Figma, FigJam, Trello, Notion, Google Suite, ChatGPT, Claude</p>
+            </div>
+          </div>
+
+          <h2 className="text-3xl font-bold mb-8">Education & Experience</h2>
+          
+          <div className="space-y-8">
+            {/* Timeline Item 1 */}
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-4 h-4 bg-blue-600 rounded-full mt-2"></div>
+                <div className="w-1 h-24 bg-gray-300"></div>
+              </div>
+              <div className="pb-8">
+                <h3 className="text-xl font-bold text-gray-900">Associate</h3>
+                <p className="text-gray-600 font-semibold">Launchpad Philly, Philadelphia, PA • September 2025 – Current</p>
+                <p className="text-gray-700 mt-2">
+                  Developing an AI-powered React app to streamline career discovery in the competitive job market. Managing projects in Trello, drilling JavaScript and React fundamentals through coursework and hands-on implementation.
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 2 */}
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-4 h-4 bg-blue-600 rounded-full mt-2"></div>
+                <div className="w-1 h-24 bg-gray-300"></div>
+              </div>
+              <div className="pb-8">
+                <h3 className="text-xl font-bold text-gray-900">Content Manager</h3>
+                <p className="text-gray-600 font-semibold">Building 21, Philadelphia, PA • July 2025 – August 2025</p>
+                <p className="text-gray-700 mt-2">
+                  Managed 200+ grant entries and organized multi-stage tasks using Google Sheets and Notion. Configured PlayLab LLMs to automate LinkedIn posts and post-purchase customer emails.
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 3 */}
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-4 h-4 bg-blue-600 rounded-full mt-2"></div>
+                <div className="w-1 h-24 bg-gray-300"></div>
+              </div>
+              <div className="pb-8">
+                <h3 className="text-xl font-bold text-gray-900">Student</h3>
+                <p className="text-gray-600 font-semibold">Launchpad Philly, Philadelphia, PA • January 2024 – June 2025</p>
+                <p className="text-gray-700 mt-2">
+                  Completed 200 hours of Python training with PCEP-aligned API integration. Built coding projects highlighting creative expression and data security. Developed workplace competencies including collaboration and conflict resolution.
+                </p>
+              </div>
+            </div>
+
+            {/* Timeline Item 4 */}
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-4 h-4 bg-blue-600 rounded-full mt-2"></div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">High School Diploma</h3>
+                <p className="text-gray-600 font-semibold">Building 21, Philadelphia, PA • June 2025</p>
+                <p className="text-gray-700 mt-2">
+                  GPA: 3.85/4.0 | Dean's List
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -14,8 +14,7 @@ export default function Contact() {
               <span className="text-3xl">📧</span>
               <div>
                 <p className="font-bold text-gray-900">Email</p>
-                <p className="text-gray-600">your.email@example.com</p>
-                <p className="text-sm text-blue-600">✏️ TODO: Add your actual email</p>
+                <p className="text-gray-600">alope0091@launchpadphilly.org</p>
               </div>
             </div>
 
@@ -24,9 +23,8 @@ export default function Contact() {
               <div>
                 <p className="font-bold text-gray-900">LinkedIn</p>
                 <a href="#" className="text-blue-500 hover:underline">
-                  linkedin.com/in/yourname
+                  linkedin.com/in/aaron-lopez-41586a307
                 </a>
-                <p className="text-sm text-blue-600">✏️ TODO: Add your LinkedIn URL</p>
               </div>
             </div>
 
@@ -35,9 +33,8 @@ export default function Contact() {
               <div>
                 <p className="font-bold text-gray-900">GitHub</p>
                 <a href="#" className="text-blue-500 hover:underline">
-                  github.com/yourname
+                  github.com/Mooleane
                 </a>
-                <p className="text-sm text-blue-600">✏️ TODO: Add your GitHub URL</p>
               </div>
             </div>
           </div>
