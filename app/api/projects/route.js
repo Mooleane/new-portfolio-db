@@ -10,7 +10,6 @@ export async function GET() {
     });
     return NextResponse.json(projects);
 
-    return NextResponse.json({ message: "TODO: Implement GET /api/projects" }, { status: 501 });
   } catch (error) {
     console.error('Error fetching projects:', error);
     return NextResponse.json(
@@ -37,12 +36,11 @@ export async function POST(request) {
     });
     return NextResponse.json(project, { status: 201 });
 
-    return NextResponse.json({ message: "TODO: Implement POST /api/projects" }, { status: 501 });
   } catch (error) {
     console.error('Error creating project:', error);
     return NextResponse.json(
       { error: 'Failed to create project' },
-      { status: 500 }
+      { status: 400 }
     );
   }
 }

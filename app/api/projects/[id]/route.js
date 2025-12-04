@@ -28,7 +28,6 @@ export async function GET(request, { params }) {
     
     return NextResponse.json(project);
 
-    return NextResponse.json({ message: `TODO: Implement GET /api/projects/${id}` }, { status: 501 });
   } catch (error) {
     console.error('Error fetching project:', error);
     return NextResponse.json(
@@ -66,12 +65,11 @@ export async function PUT(request, { params }) {
     
     return NextResponse.json(project);
 
-    return NextResponse.json({ message: `TODO: Implement PUT /api/projects/${id}` }, { status: 501 });
   } catch (error) {
     console.error('Error updating project:', error);
     return NextResponse.json(
       { error: 'Failed to update project' },
-      { status: 500 }
+      { status: 404 }
     );
   }
 }
@@ -93,12 +91,11 @@ export async function DELETE(request, { params }) {
     
     return NextResponse.json({ message: 'Project deleted successfully' });
 
-    return NextResponse.json({ message: `TODO: Implement DELETE /api/projects/${id}` }, { status: 501 });
   } catch (error) {
     console.error('Error deleting project:', error);
     return NextResponse.json(
       { error: 'Failed to delete project' },
-      { status: 500 }
+      { status: 404 }
     );
   }
 }
