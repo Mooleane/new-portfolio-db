@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image';
-import Link from 'next/link';
-import ProjectForm from './components/ProjectForm';
-import TechnologyInput from './components/TechnologyInput';
+import React, { useCallback, useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import ProjectForm from './components/ProjectForm'
 
 export default function Projects() {
   // TODO: Students will implement the following:
@@ -14,10 +13,29 @@ export default function Projects() {
   // 4. Add project creation functionality using the ProjectForm component
   // 5. Handle loading and error states
 
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  // For now, show placeholder content
-  const placeholderProjects = [];
+  const fetchProjects = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/projects')
+      if (!res.ok) throw new Error(`Failed to fetch projects: ${res.status}`)
+      const data = await res.json()
+      setProjects(Array.isArray(data) ? data : [])
+    } catch (err) {
+      setError(err.message || 'Failed to load projects')
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchProjects()
+  }, [fetchProjects])
 
 
   return (
@@ -34,26 +52,64 @@ export default function Projects() {
           </button>
         </div>
 
-        {/* TODO: Add ProjectForm component here */}
-        {showForm && <ProjectForm 
-          isOpen={showForm} 
-          onCancel={() => setShowForm(false)}
-        />}
+        {/* ProjectForm - wired to create projects */}
+        {showForm && (
+          <ProjectForm
+            isOpen={showForm}
+            onCancel={() => setShowForm(false)}
+            onSubmit={async (values) => {
+              setLoading(true)
+              setError(null)
+              try {
+                const res = await fetch('/api/projects', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(values),
+                })
+                if (!res.ok) {
+                  const text = await res.text()
+                  throw new Error(text || `Create failed: ${res.status}`)
+                }
+                const created = await res.json()
+                setProjects((prev) => [created, ...prev])
+                setShowForm(false)
+                return created
+              } catch (err) {
+                setError(err.message || 'Failed to create project')
+                throw err
+              } finally {
+                setLoading(false)
+              }
+            }}
+          />
+        )}
         {/* The form should be conditionally rendered based on showForm state */}
 
         {/* Projects Grid */}
-        {placeholderProjects.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-12">Loading projects...</div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <div className="text-red-600 font-medium mb-4">Error: {error}</div>
+            <button
+              onClick={fetchProjects}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        ) : projects.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            {placeholderProjects.map((project) => (
+            {projects.map((project) => (
               <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
                   {project.imageUrl ? (
                     <Image
                       src={project.imageUrl}
                       alt={project.title}
-                      width={400}
-                      height={200}
-                      className="w-full h-full object-cover"
+                      width={960}
+                      height={540}
+                      className="object-cover"
                     />
                   ) : (
                     <p className="text-white font-bold text-xl">No Image</p>
@@ -65,7 +121,7 @@ export default function Projects() {
                   <div className="flex gap-2 mb-4 flex-wrap">
                     {project.technologies?.slice(0, 3).map((tech, index) => (
                       <span key={index} className="text-sm bg-gray-200 px-3 py-1 rounded">
-                        {tech}
+                        {tech}-
                       </span>
                     ))}
                     {project.technologies?.length > 3 && (
@@ -118,16 +174,6 @@ export default function Projects() {
           </div>
         )}
 
-        {/* Project Ideas */}
-        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6">
-          <h3 className="font-bold text-yellow-900 mb-2">💡 Project Ideas:</h3>
-          <ul className="text-yellow-800 space-y-1">
-            <li>• Past school projects</li>
-            <li>• Personal coding projects</li>
-            <li>• Design work or creative projects</li>
-            <li>• Future projects you want to build (coming soon!)</li>
-          </ul>
-        </div>
       </div>
     </div>
   );
