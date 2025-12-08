@@ -12,20 +12,16 @@ export default async function ProjectDetail({ params }) {
   // 3. Parse the JSON response
   // 4. Display the project details
   
-  // Example implementation (students should write this):
-  // const response = await fetch(`http://localhost:3000/api/projects/${id}`);
-  // 
-  // if (!response.ok) {
-  //   if (response.status === 404) {
-  //     notFound();
-  //   }
-  //   throw new Error('Failed to fetch project');
-  // }
-  // 
-  // const project = await response.json();
-
-  // For now, return placeholder until students implement the API
-  const project = null;
+  const response = await fetch(`http://localhost:3000/api/projects/${id}`);
+  
+  if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
+    throw new Error('Failed to fetch project');
+  }
+  
+  const project = await response.json();
 
   if (!project) {
     return (
@@ -69,7 +65,7 @@ export default async function ProjectDetail({ params }) {
           <div className="flex gap-2 mb-6">
             {project.technologies.map((tech, index) => (
               <span key={index} className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
-                {tech}
+                {tech}, 
               </span>
             ))}
           </div>
@@ -77,13 +73,13 @@ export default async function ProjectDetail({ params }) {
 
         {/* Project image */}
         {project.imageUrl && (
-          <div className="mb-8">
+          <div className="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
             <Image
               src={project.imageUrl}
               alt={project.title}
-              width={800}
-              height={400}
-              className="w-full rounded-lg shadow-lg"
+              width={960}
+              height={540}
+              className="object-cover"
             />
           </div>
         )}
@@ -97,14 +93,14 @@ export default async function ProjectDetail({ params }) {
               {project.description}
             </p>
 
-            {/* Additional sections students can add */}
+            {/* Additional sections students can add
             <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-xl font-bold mb-3">Technical Details</h3>
               <p className="text-gray-700">
                 Add more details about your project implementation, challenges you faced, 
                 and what you learned while building it.
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Sidebar */}

@@ -40,7 +40,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+        {/* <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
           <h3 className="font-bold text-green-900 mb-2">💡 Optional Enhancements:</h3>
           <ul className="text-green-800 space-y-1">
             <li>• Add a contact form (we'll learn this in Week 4!)</li>
@@ -48,7 +48,7 @@ export default function Contact() {
             <li>• Add social media icons</li>
             <li>• List your availability for projects</li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   )

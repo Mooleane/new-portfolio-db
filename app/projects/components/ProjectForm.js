@@ -121,7 +121,7 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
         <label>Technologies:</label>
         <TechnologyInput
           technologies={technologies}
-          setTechnologies={setTechnologies}
+          onChange={setTechnologies}
         />
         {errors.technologies && <p>{errors.technologies}</p>}
       </div>

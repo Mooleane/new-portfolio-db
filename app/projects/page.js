@@ -121,7 +121,7 @@ export default function Projects() {
                   <div className="flex gap-2 mb-4 flex-wrap">
                     {project.technologies?.slice(0, 3).map((tech, index) => (
                       <span key={index} className="text-sm bg-gray-200 px-3 py-1 rounded">
-                        {tech}-
+                        {tech}, 
                       </span>
                     ))}
                     {project.technologies?.length > 3 && (
