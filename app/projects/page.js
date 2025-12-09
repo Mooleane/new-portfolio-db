@@ -53,6 +53,7 @@ export default function Projects() {
         </div>
 
         {/* ProjectForm - wired to create projects */}
+        {/* The form should be conditionally rendered based on showForm state */}
         {showForm && (
           <ProjectForm
             isOpen={showForm}
@@ -83,7 +84,6 @@ export default function Projects() {
             }}
           />
         )}
-        {/* The form should be conditionally rendered based on showForm state */}
 
         {/* Projects Grid */}
         {loading ? (

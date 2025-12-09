@@ -35,7 +35,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-// Quick-add list (kept outside the component to avoid recreating it each render)
+// The different technologies that can be quick-added.
 const QUICK_TECHNOLOGIES = [
   'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'Express',
   'HTML', 'CSS', 'Tailwind CSS', 'Bootstrap', 'Python', 'Java',
@@ -55,16 +55,16 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
   // Local error message (e.g., duplicate)
   const [localError, setLocalError] = useState('')
 
-  // Utility: trim input
+  // Trims an input.
   const normalize = (s) => String(s).trim()
 
-  // Utility: check duplicate (case-insensitive)
+  // Checks for duplicate strings and inputs.
   const isDuplicate = (tech) => {
     const lc = String(tech).toLowerCase()
     return selectedTechs.some((t) => String(t).toLowerCase() === lc)
   }
 
-  // Add a technology (from input or quick-add)
+  // Adds a technology (from input or quick-add).
   const addTechnology = (raw) => {
     const tech = normalize(raw)
     if (!tech) return
@@ -79,14 +79,14 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
     if (typeof onChange === 'function') onChange(next)
   }
 
-  // Remove a technology by index
+  // Remove a technology by it's index.
   const removeTechnology = (index) => {
     const next = selectedTechs.filter((_, i) => i !== index)
     setSelectedTechs(next)
     if (typeof onChange === 'function') onChange(next)
   }
 
-  // Handle Enter key in input
+  // Allows user to press enter for inputs.
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
@@ -94,7 +94,6 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
     }
   }
 
-  // === IMPORTANT: Sync with parent prop only when different ===
   // This prevents an infinite update loop if `technologies` prop is a new array
   // reference every render. We compare length and each item to decide.
   useEffect(() => {
@@ -103,16 +102,12 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
     const propArr = technologies
     const stateArr = selectedTechs
 
-    const arraysEqual =
-      propArr.length === stateArr.length &&
-      propArr.every((val, idx) => String(val) === String(stateArr[idx]))
+    const arraysEqual = propArr.length === stateArr.length && propArr.every((val, idx) => String(val) === String(stateArr[idx]))
 
-    // Only update local state if arrays are actually different
+    // Only updates the local state if arrays are different.
     if (!arraysEqual) {
       setSelectedTechs(propArr)
     }
-    // We intentionally do NOT call onChange here.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [technologies])
 
   const showError = !!(error || localError)

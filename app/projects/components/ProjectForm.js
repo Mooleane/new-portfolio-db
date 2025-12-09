@@ -49,16 +49,18 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
 
+  const urlRegex = /^https?:\/\/.+\..+/
+
   const validate = () => {
     const newErrors = {}
     if (!title.trim()) newErrors.title = 'Title is required'
     if (!description.trim()) newErrors.description = 'Description is required'
-    if (!technologies.length) newErrors.technologies = 'At least one technology is required'
+    // tests expect technologies required (reject when missing)
+    if (!technologies || technologies.length === 0) newErrors.technologies = 'At least one technology is required'
 
-    const urlRegex = /^https?:\/\/.+\..+/
-    if (imageUrl && !urlRegex.test(imageUrl)) newErrors.imageUrl = 'Invalid URL'
-    if (projectUrl && !urlRegex.test(projectUrl)) newErrors.projectUrl = 'Invalid URL'
-    if (githubUrl && !urlRegex.test(githubUrl)) newErrors.githubUrl = 'Invalid URL'
+    if (imageUrl && !urlRegex.test(imageUrl)) newErrors.imageUrl = 'Please enter a valid URL'
+    if (projectUrl && !urlRegex.test(projectUrl)) newErrors.projectUrl = 'Please enter a valid URL'
+    if (githubUrl && !urlRegex.test(githubUrl)) newErrors.githubUrl = 'Please enter a valid URL'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -69,8 +71,16 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
     if (!validate()) return
     setLoading(true)
     try {
-      await onSubmit({ title, description, imageUrl, projectUrl, githubUrl, technologies })
-      // reset form
+      await onSubmit({
+        title: title.trim(),
+        description: description.trim(),
+        imageUrl: imageUrl.trim(),
+        projectUrl: projectUrl.trim(),
+        githubUrl: githubUrl.trim(),
+        technologies
+      })
+
+      // reset on success
       setTitle('')
       setDescription('')
       setImageUrl('')
@@ -80,45 +90,75 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
       setErrors({})
     } catch (err) {
       console.error(err)
+      // Optionally present a generic error to user
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-label="project-form" className="space-y-4">
+      <h2>Add New Project</h2>
+
       <div>
-        <label>Title:</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} />
+        <label htmlFor="title">Project Title</label>
+        <input
+          id="title"
+          aria-label="Project Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className={errors.title ? 'border-red-500' : ''}
+        />
         {errors.title && <p>{errors.title}</p>}
       </div>
 
       <div>
-        <label>Description:</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          aria-label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className={errors.description ? 'border-red-500' : ''}
+        />
         {errors.description && <p>{errors.description}</p>}
       </div>
 
       <div>
-        <label>Image URL:</label>
-        <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+        <label htmlFor="imageUrl">Image URL</label>
+        <input
+          id="imageUrl"
+          aria-label="Image URL"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
         {errors.imageUrl && <p>{errors.imageUrl}</p>}
       </div>
 
       <div>
-        <label>Project URL:</label>
-        <input value={projectUrl} onChange={(e) => setProjectUrl(e.target.value)} />
+        <label htmlFor="projectUrl">Project URL</label>
+        <input
+          id="projectUrl"
+          aria-label="Project URL"
+          value={projectUrl}
+          onChange={(e) => setProjectUrl(e.target.value)}
+        />
         {errors.projectUrl && <p>{errors.projectUrl}</p>}
       </div>
 
       <div>
-        <label>GitHub URL:</label>
-        <input value={githubUrl} onChange={(e) => setGithubUrl(e.target.value)} />
+        <label htmlFor="githubUrl">GitHub URL</label>
+        <input
+          id="githubUrl"
+          aria-label="GitHub URL"
+          value={githubUrl}
+          onChange={(e) => setGithubUrl(e.target.value)}
+        />
         {errors.githubUrl && <p>{errors.githubUrl}</p>}
       </div>
 
       <div>
-        <label>Technologies:</label>
+        <label htmlFor="technologies">Technologies</label>
         <TechnologyInput
           technologies={technologies}
           onChange={setTechnologies}
@@ -126,8 +166,33 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
         {errors.technologies && <p>{errors.technologies}</p>}
       </div>
 
-      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
-      <button type="button" onClick={onCancel} disabled={loading}>Cancel</button>
+      <div className="flex gap-2">
+        <button
+          type="submit"
+          disabled={loading}
+          aria-label="Create Project Button"
+        >
+          {loading ? 'Creating Project...' : 'Create Project'}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            // reset local state when cancel is clicked
+            setTitle('')
+            setDescription('')
+            setImageUrl('')
+            setProjectUrl('')
+            setGithubUrl('')
+            setTechnologies([])
+            setErrors({})
+            onCancel && onCancel()
+          }}
+          disabled={loading}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   )
 }
