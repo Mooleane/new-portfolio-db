@@ -143,7 +143,7 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
           value={inputValue}
           onChange={(e) => { setInputValue(e.target.value); setLocalError('') }}
           onKeyDown={handleKeyDown}
-          placeholder="Type technology and press Enter or Add"
+          placeholder="Type a technology"
           className={
             'flex-1 px-3 py-2 border rounded focus:outline-none ' +
             (showError ? 'border-red-500' : 'border-gray-300')
