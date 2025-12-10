@@ -116,11 +116,11 @@ export default function Projects() {
                   )}
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                  <h3 className="text-2xl text-blue-500 font-bold mb-2">{project.title}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">{project.description}</p>
                   <div className="flex gap-2 mb-4 flex-wrap">
                     {project.technologies?.slice(0, 3).map((tech, index) => (
-                      <span key={index} className="text-sm bg-gray-200 px-3 py-1 rounded">
+                      <span key={index} className="text-sm text-blue-500 bg-gray-200 px-3 py-1 rounded">
                         {tech}, 
                       </span>
                     ))}

@@ -12,14 +12,14 @@ export default function Contact() {
           </p>
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <span className="text-3xl">:e-mail:</span>
+              <span className="text-3xl">📧</span>
               <div>
                 <p className="font-bold text-gray-900">Email</p>
                 <p className="text-gray-600">alope0091@launchpadphilly.org</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-3xl">:link:</span>
+              <span className="text-3xl">🔗</span>
               <div>
                 <p className="font-bold text-gray-900">LinkedIn</p>
                 <Link
@@ -32,7 +32,7 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-3xl">:computer:</span>
+              <span className="text-3xl">💻</span>
               <div>
                 <p className="font-bold text-gray-900">GitHub</p>
                 <Link
