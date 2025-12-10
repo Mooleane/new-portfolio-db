@@ -8,7 +8,7 @@ export default function Contact() {
         <h1 className="text-5xl font-bold mb-12">Get In Touch</h1>
         <div className="bg-gray-900 rounded-lg shadow-lg p-8 mb-8">
           <p className="text-xl text-gray-400 mb-8">
-            I'd love to hear from you! Feel free to reach out through any of these channels.
+            I&apos;d love to hear from you! Feel free to reach out through any of these channels.
           </p>
           <div className="space-y-6">
             <div className="flex items-center gap-4">

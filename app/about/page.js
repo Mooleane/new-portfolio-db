@@ -82,7 +82,7 @@ export default function About() {
                 <h3 className="text-xl font-bold text-white">High School Diploma</h3>
                 <p className="text-gray-500 font-semibold">Building 21, Philadelphia, PA • June 2025</p>
                 <p className="text-gray-500 mt-2 leading-relaxed">
-                  GPA: 3.85/4.0 | Dean's List
+                  GPA: 3.85/4.0 | Dean&apos;s List
                 </p>
               </div>
             </div>
