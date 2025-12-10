@@ -55,7 +55,6 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
     const newErrors = {}
     if (!title.trim()) newErrors.title = 'Title is required'
     if (!description.trim()) newErrors.description = 'Description is required'
-    // tests expect technologies required (reject when missing)
     if (!technologies || technologies.length === 0) newErrors.technologies = 'At least one technology is required'
 
     if (imageUrl && !urlRegex.test(imageUrl)) newErrors.imageUrl = 'Please enter a valid URL'
@@ -90,7 +89,6 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
       setErrors({})
     } catch (err) {
       console.error(err)
-      // Optionally present a generic error to user
     } finally {
       setLoading(false)
     }
@@ -98,72 +96,76 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
   return (
     <form onSubmit={handleSubmit} aria-label="project-form" className="space-y-4">
-      <h2>Add New Project</h2>
+      <h2 className="text-white text-2xl font-bold">Add New Project</h2>
 
       <div>
-        <label htmlFor="title">Project Title</label>
+        <label htmlFor="title" className="text-white">Project Title</label>
         <input
           id="title"
           aria-label="Project Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className={errors.title ? 'border-red-500' : ''}
+          className={`bg-gray-900 p-2 rounded w-full ${errors.title ? 'border-red-500 border' : ''}`}
         />
-        {errors.title && <p>{errors.title}</p>}
+        {errors.title && <p className="text-red-500">{errors.title}</p>}
       </div>
 
       <div>
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description" className="text-white">Description</label>
         <textarea
           id="description"
           aria-label="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className={errors.description ? 'border-red-500' : ''}
+          className={`bg-gray-900 p-2 rounded w-full ${errors.description ? 'border-red-500 border' : ''}`}
         />
-        {errors.description && <p>{errors.description}</p>}
+        {errors.description && <p className="text-red-500">{errors.description}</p>}
       </div>
 
       <div>
-        <label htmlFor="imageUrl">Image URL</label>
+        <label htmlFor="imageUrl" className="text-white">Image URL</label>
         <input
           id="imageUrl"
           aria-label="Image URL"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
+          className={`bg-gray-900 p-2 rounded w-full ${errors.imageUrl ? 'border-red-500 border' : ''}`}
         />
-        {errors.imageUrl && <p>{errors.imageUrl}</p>}
+        {errors.imageUrl && <p className="text-red-500">{errors.imageUrl}</p>}
       </div>
 
       <div>
-        <label htmlFor="projectUrl">Project URL</label>
+        <label htmlFor="projectUrl" className="text-white">Project URL</label>
         <input
           id="projectUrl"
           aria-label="Project URL"
           value={projectUrl}
           onChange={(e) => setProjectUrl(e.target.value)}
+          className={`bg-gray-900 p-2 rounded w-full ${errors.projectUrl ? 'border-red-500 border' : ''}`}
         />
-        {errors.projectUrl && <p>{errors.projectUrl}</p>}
+        {errors.projectUrl && <p className="text-red-500">{errors.projectUrl}</p>}
       </div>
 
       <div>
-        <label htmlFor="githubUrl">GitHub URL</label>
+        <label htmlFor="githubUrl" className="text-white">GitHub URL</label>
         <input
           id="githubUrl"
           aria-label="GitHub URL"
           value={githubUrl}
           onChange={(e) => setGithubUrl(e.target.value)}
+          className={`bg-gray-900 p-2 rounded w-full ${errors.githubUrl ? 'border-red-500 border' : ''}`}
         />
-        {errors.githubUrl && <p>{errors.githubUrl}</p>}
+        {errors.githubUrl && <p className="text-red-500">{errors.githubUrl}</p>}
       </div>
 
       <div>
-        <label htmlFor="technologies">Technologies</label>
+        <label htmlFor="technologies" className="text-white">Technologies</label>
         <TechnologyInput
           technologies={technologies}
           onChange={setTechnologies}
+          className="bg-gray-900 p-2 rounded w-full"
         />
-        {errors.technologies && <p>{errors.technologies}</p>}
+        {errors.technologies && <p className="text-red-500">{errors.technologies}</p>}
       </div>
 
       <div className="flex gap-2">
@@ -171,6 +173,7 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
           type="submit"
           disabled={loading}
           aria-label="Create Project Button"
+          className="bg-blue-600 text-white p-2 rounded disabled:opacity-50"
         >
           {loading ? 'Creating Project...' : 'Create Project'}
         </button>
@@ -178,7 +181,6 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
         <button
           type="button"
           onClick={() => {
-            // reset local state when cancel is clicked
             setTitle('')
             setDescription('')
             setImageUrl('')
@@ -189,6 +191,7 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
             onCancel && onCancel()
           }}
           disabled={loading}
+          className="bg-gray-700 text-white p-2 rounded disabled:opacity-50"
         >
           Cancel
         </button>

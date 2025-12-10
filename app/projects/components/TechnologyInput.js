@@ -88,7 +88,6 @@ export default function TechnologyInput({ technologies = [], onChange, error }) 
     }
   }
 
-  // Sync prop -> state when `technologies` prop changes (shallow compare)
   useEffect(() => {
     if (!Array.isArray(technologies)) return
     const propArr = technologies

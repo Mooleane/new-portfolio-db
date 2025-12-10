@@ -18,7 +18,7 @@ export default async function ProjectDetail({ params }) {
 
   if (!project) {
     return (
-      <div className="min-h-screen p-10 bg-gray-900">
+      <div className="min-h-screen p-10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-extrabold mb-10 text-white">Project Not Implemented</h1>
           <div className="bg-blue-800 border border-blue-700 rounded-xl p-10 max-w-md mx-auto shadow">
@@ -41,7 +41,7 @@ export default async function ProjectDetail({ params }) {
   }
 
   return (
-    <div className="min-h-screen p-10 bg-gray-900">
+    <div className="min-h-screen p-10">
       <div className="max-w-4xl mx-auto">
         <Link 
           href="/projects" 
@@ -76,13 +76,13 @@ export default async function ProjectDetail({ params }) {
         <div className="grid md:grid-cols-3 gap-10">
           <div className="md:col-span-2">
             <h2 className="text-3xl font-bold mb-5 text-white">About This Project</h2>
-            <p className="text-lg text-gray-200 leading-relaxed mb-8">
+            <p className="text-lg text-gray-500 leading-relaxed mb-8">
               {project.description}
             </p>
           </div>
 
           <div className="space-y-8">
-            <div className="bg-gray-800 rounded-xl shadow-md p-6">
+            <div className="bg-gray-900 rounded-xl shadow-md p-6">
               <h3 className="text-xl font-bold mb-5 text-white">Project Links</h3>
               <div className="space-y-4">
                 {project.projectUrl && (
@@ -90,7 +90,7 @@ export default async function ProjectDetail({ params }) {
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-green-600 text-white text-center px-5 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
+                    className="block w-full bg-blue-600 text-white text-center px-5 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
                   >
                     View Live Project
                   </a>

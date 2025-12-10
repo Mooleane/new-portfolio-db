@@ -101,14 +101,13 @@ export default function Projects() {
         ) : projects.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             {projects.map((project) => (
-              <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+              <div key={project.id} className="bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="relative w-full h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden">
                   {project.imageUrl ? (
                     <Image
                       src={project.imageUrl}
                       alt={project.title}
-                      width={960}
-                      height={540}
+                      fill
                       className="object-cover"
                     />
                   ) : (
@@ -116,12 +115,12 @@ export default function Projects() {
                   )}
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl text-blue-500 font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">{project.description}</p>
+                  <h3 className="text-2xl text-gray-100 font-bold mb-2">{project.title}</h3>
+                  <p className="text-gray-400 mb-4 line-clamp-3">{project.description}</p>
                   <div className="flex gap-2 mb-4 flex-wrap">
                     {project.technologies?.slice(0, 3).map((tech, index) => (
-                      <span key={index} className="text-sm text-blue-500 bg-gray-200 px-3 py-1 rounded">
-                        {tech}, 
+                      <span key={index} className="text-sm text-gray-100 bg-blue-600 px-3 py-1 rounded-full">
+                        {tech}
                       </span>
                     ))}
                     {project.technologies?.length > 3 && (
@@ -142,9 +141,9 @@ export default function Projects() {
                         href={project.projectUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition-colors"
+                        className="bg-gray-700 text-gray-100 px-4 py-2 rounded hover:bg-gray-300 transition-colors"
                       >
-                        Live Demo
+                        Source
                       </a>
                     )}
                   </div>
