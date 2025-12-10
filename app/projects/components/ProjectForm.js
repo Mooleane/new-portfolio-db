@@ -37,8 +37,6 @@ import { useState } from 'react'
 import TechnologyInput from './TechnologyInput'
 
 export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
-  if (!isOpen) return null
-
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -48,6 +46,8 @@ export default function ProjectForm({ onSubmit, onCancel, isOpen }) {
 
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
+
+  if (!isOpen) return null
 
   const urlRegex = /^https?:\/\/.+\..+/
 
